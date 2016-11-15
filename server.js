@@ -18,8 +18,56 @@ server.route({
     method: 'GET',
     path: '/{name}',
     handler: function (request, reply) {
+
+
+        var elasticsearch = require('elasticsearch');
+        var client = new elasticsearch.Client({
+            host: 'search:9200',
+            log: 'trace'
+        });
+
+        client.search({
+            index: 'nutch',
+
+                body: {
+                    query: {
+                        filtered: {
+                            query: {
+                                query_string: {
+                                    query: encodeURIComponent(request.params.name)
+                                }
+                            }
+                        }
+                    },
+                    fields: [
+                        "id",
+                        "title",
+                        "host",
+                        "url",
+                        "anchor"
+                    ],
+                    from: 0,
+                    size: 50,
+                    sort: {
+                        _score: {
+                            "order": "desc"
+                        }
+                    },
+                    explain: true
+            }
+        }).then(function (resp) {
+
+            var hits = resp.hits.hits;
+
+        }, function (err) {
+            console.trace(err.message);
+        });
+
+
         reply('Hello, ' + encodeURIComponent(request.params.name) + '!');
     }
+
+
 });
 
 server.register({
