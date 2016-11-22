@@ -5,10 +5,10 @@ exports.index = {
         strategy: 'session'
     },
     handler: function (request, reply) {
+
         if (request.auth.isAuthenticated) {
-            return reply.redirect('/');
+            return reply.redirect('/home');
         }
         return reply.view('index');
     }
-
 };
