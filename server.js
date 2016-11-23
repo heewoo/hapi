@@ -23,35 +23,42 @@ server.connection({
 
 
 
-// register //
-server.register([require('hapi-auth-cookie'), require('vision')],  (err) =>{
+// logger
+Logger.logging(server, Good);
+
+// route register //
+server.register( [Auth,Vision ],   function (err){
 
     if (err) {
         throw err;
     }
 
-    Logger.logging(server, Good);
+    // const cache = server.cache({ segment: 'sessions', expiresIn: 3 * 24 * 60 * 60 * 1000 });
+    // server.app.cache = cache;
 
-    server.auth.strategy('session', 'cookie', {
-        password: 'secret',
-        cookie: 'session',
-        isSecure: false,
-        ttl: 24* 60 * 60 * 1000
+
+    server.auth.strategy('session', 'cookie', true, {
+        password: 'password-should-be-32-characters',
+        cookie: 'sid-example',
+        // redirectTo: '/',
+        isSecure: false
     });
 
+
     server.views({
-        engines: {
-            ejs: Ejs
-        },
+        engines: {ejs: Ejs},
         relativeTo: __dirname + __viewPath,
         layoutPath: __dirname + __layoutPath,
         path: 'views',
         layout: true
     });
 
+    server.route(Router.rootHandler);
+
+
 });
 
-server.route(Router.rootHandler);
+
 
 
 server.start(function (err) {
@@ -60,3 +67,7 @@ server.start(function (err) {
     }
     console.log("Hapi start on port: 3000");
 });
+
+
+
+

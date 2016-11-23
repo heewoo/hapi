@@ -1,22 +1,16 @@
 {
-  "name": "hapi",
+  "name": "testHapi",
   "description": "HTTP Server framework",
   "homepage": "http://hapijs.com",
   "version": "15.2.0",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/hapijs/hapi"
-  },
-  "main": "lib/index.js",
+  "main": "server.js",
   "keywords": [
     "framework",
     "http",
     "api",
     "web"
   ],
-  "engines": {
-    "node": ">=4.5.0"
-  },
+  "author": "heewoo",
   "dependencies": {
     "accept": "2.x.x",
     "ammo": "2.x.x",

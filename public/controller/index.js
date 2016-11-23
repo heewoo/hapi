@@ -9,6 +9,10 @@ exports.index = {
         if (request.auth.isAuthenticated) {
             return reply.redirect('/home');
         }
-        return reply.view('index');
+
+        return reply.view('index', {
+            title: 'examples/views/ejs/index.js | Hapi ' + request.server.version,
+            message: 'Index - Hello World!'
+        });
     }
 };
