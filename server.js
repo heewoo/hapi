@@ -9,8 +9,10 @@ const Good      = require('good');
 const Vision    = require('vision');
 const Auth      = require('hapi-auth-cookie');
 const Ejs       = require('ejs');
-var Logger      = require("./public/module/logging/logging");
-var Router      = require('./public/route/route');
+
+
+const Logger      = require("./public/module/logging/logging");
+const Router      = require('./public/route/route');
 
 
 const server = new Hapi.Server();
@@ -23,11 +25,11 @@ server.connection({
 
 
 
-// logger
+// logger module //
 Logger.logging(server, Good);
 
 // route register //
-server.register( [Auth,Vision ],   function (err){
+server.register( [Auth,Vision],   function (err){
 
     if (err) {
         throw err;
@@ -53,10 +55,20 @@ server.register( [Auth,Vision ],   function (err){
         layout: true
     });
 
+
+    // 404 redirect
+    server.ext('onPreResponse', function (request, reply) {
+        if (request.response.isBoom) {
+            return reply.redirect('/');
+        }
+        return reply.continue();
+    });
+
+
     server.route(Router.rootHandler);
 
-
 });
+
 
 
 

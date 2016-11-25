@@ -6,7 +6,8 @@ var Index = require( '../../public/controller/index');
 
 exports.rootHandler = [
 
-    { method: 'GET', path: '/', config: Index.index}
+    { method: 'GET', path: '/', config: Index.index},
+    { method: 'GET', path: '/search', config: Index.search}
 
 ];
 
