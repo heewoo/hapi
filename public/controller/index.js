@@ -2,7 +2,7 @@
 var Elasticsearch = require('elasticsearch');
 var client = new Elasticsearch.Client({
     host: 'search:9200',
-    log: 'trace'
+    log: 'info'
 });
 
 exports.index = {
@@ -72,25 +72,45 @@ exports.search = {
         //             }
         // }
             body: {
-                query: {
+                query:{
                     match: {
-                        match: {
-                            query: keyword,
-                            fuzziness: "AUTO"
-                            }
+                            title : keyword
+                        }
+                },
+                fields:["host","id","title","url","content"],
+                highlight: {
+                    pre_tags:["<strong>"],
+                    post_tags:["</strong>"],
+                    fields: {
+                        title:{}
                     }
                 },
-                filter: {
-                   term: {content: keyword}
+                sort:{
+                    _score:{
+                        order:"desc"
+                    }
                 },
+
+                from:0,
+                size:50,
+                explain:true
             }
         }).then(function (resp) {
+            const result = resp.hits.hits;
+            const content = new Array();
+            const contentHighlight = new Array();
 
+            for(i in result){
+                content.push(result[i].fields);
+            }
+
+
+            console.log(result);
 
             return reply.view('heewoo', {
                 title: 'search | Hapi ' + request.server.version,
-                message: '검색어 =' + params,
-                // content:  resp.hits.hits
+                message: '검색어 =' + keyword,
+                contents:  content
             });
 
         }, function (err) {
