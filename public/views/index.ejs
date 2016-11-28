@@ -1,5 +1,23 @@
+
+
+<script>
+
+
+    $.ajax({
+        type: "GET",
+        url:'./totalCnt',
+        success:function(data){
+            console.log(data);
+        }
+    })
+
+</script>
+
 <div id="content">
     <div class="container">
         <h1>Hello G.T</h1>
+
+        <h1>전체 색인 건수 <%=count%>건</h1>
+
     </div>
 </div>
