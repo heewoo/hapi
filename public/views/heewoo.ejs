@@ -10,11 +10,12 @@
 
                 <% for(var i=0; i<contents.length; i++) {%>
                     <tr>
-                        <td><%= contents[i].fields.id %></td>
-                        <td><%= contents[i].fields.host %></td>
-                        <td><%= contents[i].fields.title %></td>
-                        <td><%= contents[i].fields.url %></td>
-                        <td><%= contents[i].highlight.content %></td>
+                        <td><img src=" http://www.google.com/s2/favicons?domain=<%= contents[i].host %>"><%= contents[i].host %></td>
+                        <td><%= contents[i].id %></td>
+                        <td><%= contents[i].host %></td>
+                        <td><%= contents[i].title %></td>
+                        <td><%= contents[i].url %></td>
+                        <td><%= contents[i].content %></td>
                   </tr>
                 <% } %>
         </table>

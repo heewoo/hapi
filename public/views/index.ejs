@@ -1,23 +1,32 @@
 
 
 <script>
-
-
     $.ajax({
         type: "GET",
         url:'./totalCnt',
         success:function(data){
-            console.log(data);
+            $("#count").text(data.count);
         }
     })
 
 </script>
+<form class="form-horizontal">
+    <div id="content">
+        <div class="container">
+            <h1>Hello G.T</h1>
 
-<div id="content">
-    <div class="container">
-        <h1>Hello G.T</h1>
+            <h1>전체 색인 건수 <string id="count"></string>건</h1>
 
-        <h1>전체 색인 건수 <%=count%>건</h1>
-
+        </div>
     </div>
-</div>
+
+
+    <div class="input-group input-group-lg">
+        <input type="text" class="form-control" placeholder="검색어를 입력하세요" aria-describedby="sizing-addon1">
+    </div>
+    <button type="button" class="btn btn-default btn-lg">
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 검색
+    </button>
+
+
+</form>

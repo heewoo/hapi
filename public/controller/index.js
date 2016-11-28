@@ -11,30 +11,29 @@ exports.index = {
         strategy: 'session'
     },
     handler: function (request, reply) {
-
         if (request.auth.isAuthenticated) {
             return reply.redirect('/home');
         }
-
-
-        console.log("123");
-        client.count(function (error, response, status) {
-
-
-            return reply.view('index', {
-                title: 'views/index.js | Hapi ' + request.server.version,
-                message: 'Index - Hello World!',
-                count:  response.count
-            });
-
-
-
+        return reply.view('index', {
+            title: 'views/index.js | Hapi ' + request.server.version,
+            message: 'Index - Hello World!',
         });
-
-
-
     }
 };
+
+
+exports.totalCnt = {
+    auth: {
+        mode: 'try',
+        strategy: 'session'
+    },
+    handler: function (req, reply) {
+        client.count(function (error, response, status) {
+            reply({result: true, count: response.count});
+        });
+    }
+};
+
 
 
 
@@ -60,10 +59,18 @@ exports.search = {
                             query: keyword,
                             fields: ["host","id","title","url","content"],
                             tie_breaker: 0.2,
-                            type: "best_fields"
+                            type: "best_fields",
+                            fuzziness: "AUTO"
                         }
                 },
-                fields:["host","id","title","url"],
+                fields:["host","id","title","url","content"],
+                sort:{
+                    _score:{
+                        order:"desc"
+                    }
+                },
+                /* highlight 추후 적용 */
+                /*
                 highlight: {
                     pre_tags:["<strong>"],
                     post_tags:["</strong>"],
@@ -71,33 +78,26 @@ exports.search = {
                         content:{}
                     }
                 },
-                sort:{
-                    _score:{
-                        order:"desc"
-                    }
-                },
-
+                */
                 from:0,
                 size:50,
                 explain:true
             }
         }).then(function (resp) {
-            const result = resp.hits;
-            const resultHits =  result.hits;
+            const resultHits =  resp.hits.hits;
             const content = new Array();
 
             for(i in resultHits){
-                content.push(resultHits[i]);
-
+                content.push(resultHits[i].fields);
             }
 
-            console.log(resp);
+            console.log(content);
 
             return reply.view('heewoo', {
                 title: 'search | Hapi ' + request.server.version,
                 message: '검색어 =' + keyword,
                 contents:  content,
-                total: result.total,
+                total: resp.hits.total,
                 took:  resp.took/1000
             });
 

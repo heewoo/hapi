@@ -1,4 +1,5 @@
 var Index = require( '../../public/controller/index');
+var Ajax = require( '../../public/controller/ajax');
 
 
 
@@ -7,7 +8,8 @@ var Index = require( '../../public/controller/index');
 exports.rootHandler = [
 
     { method: 'GET', path: '/', config: Index.index},
-    { method: 'GET', path: '/search', config: Index.search}
+    { method: 'GET', path: '/search', config: Index.search},
+    { method: 'GET', path: '/totalCnt', config: Index.totalCnt}
 
 
 
