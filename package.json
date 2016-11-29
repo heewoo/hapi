@@ -29,7 +29,7 @@
     "hapi-auth-cookie": "^6.1.1",
     "heavy": "4.x.x",
     "hoek": "4.x.x",
-    "inert": "^4.0.2",
+    "inert": "https://registry.npmjs.org/inert/-/inert-4.0.2.tgz",
     "iron": "4.x.x",
     "items": "2.x.x",
     "joi": "9.x.x",

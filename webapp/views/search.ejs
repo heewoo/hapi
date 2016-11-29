@@ -1,0 +1,71 @@
+<div id="content">
+
+    <div class="container">
+        <h1><%=title%></h1>
+        <h1>검색어 = <%=keyword %></h1>
+        <h1>검색 건수 <%=total%></h1>
+        <h1>검색 시간 <%=took%> 초</h1>
+
+        <form class="form-inline" method="GET" action="/search">
+            <div class="input-group input-group-lg">
+                <input type="text" name="q" id="keyword" class="form-control" placeholder="" aria-describedby="sizing-addon1" value="<%=keyword %>">
+            </div>
+            <button type="submit" class="btn btn-default btn-lg">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 검색
+            </button>
+        </form>
+
+
+        <div style="width: 100%">
+            <!-- list -->
+            <div style="border: 1px solid red; float: left; width: 100%; padding:10px; max-height: 100%">
+                <table border="1">
+                        <% if(total > 0){%>
+                            <% for(var i=0; i<contents.length; i++) {%>
+
+                                <tr>
+                                        <th style="width:10%">
+                                        <img src=" http://www.google.com/s2/favicons?domain=<%= contents[i].fields.host %>">
+                                                <%= contents[i].fields.host %>
+                                        </th>
+                                        <th>
+                                            <a href="#" onclick="getSite('<%= contents[i].fields.url %>')">
+                                                <h3><%= contents[i].fields.title %></h3>
+                                            </a>
+                                        </th>
+                                </tr>
+
+                                <tr>
+                                    <th>
+                                        <span><%= contents[i].highlight.content.toString().substring(0,300) %></span>
+                                    </th>
+                                </tr>
+                            <% } %>
+                        <%}%>
+                </table>
+            </div>
+
+
+
+        </div>
+
+    </div>
+</div>
+
+<script language="JavaScript">
+
+     function getContentDetail(url){
+         console.log(url);
+         // target //
+       $("#contentDetail").attr("src",url);
+     }
+
+     function getSite(url){
+         window.open(url);
+     }
+
+
+
+
+
+</script>

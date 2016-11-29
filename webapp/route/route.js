@@ -1,5 +1,6 @@
-var Index = require( '../../public/controller/index');
-var Ajax = require( '../../public/controller/ajax');
+var Index = require( '../controller/index');
+var Ajax = require( '../controller/ajax');
+var Authentication = require( '../controller/authentication');
 
 
 
@@ -9,7 +10,10 @@ exports.rootHandler = [
 
     { method: 'GET', path: '/', config: Index.index},
     { method: 'GET', path: '/search', config: Index.search},
-    { method: 'GET', path: '/totalCnt', config: Index.totalCnt}
+    { method: 'GET', path: '/searchPage', config: Index.search},
+    { method: 'GET', path: '/totalCnt', config: Index.totalCnt},
+
+
 
 
 

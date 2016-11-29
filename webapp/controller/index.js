@@ -12,9 +12,9 @@ exports.index = {
     },
     handler: function (request, reply) {
         if (request.auth.isAuthenticated) {
-            return reply.redirect('/home');
+            return reply.redirect('/index');
         }
-        return reply.view('index', {
+          reply.view('index', {
             title: 'views/index.js | Hapi ' + request.server.version,
             message: 'Index - Hello World!',
         });
@@ -57,28 +57,25 @@ exports.search = {
                 query:{
                     multi_match: {
                             query: keyword,
-                            fields: ["host","id","title","url","content"],
-                            tie_breaker: 0.2,
+                            fields: ["content"],
+                            tie_breaker: 0.1,
                             type: "best_fields",
                             fuzziness: "AUTO"
                         }
                 },
-                fields:["host","id","title","url","content"],
+                fields:["host","id","title","url"],
                 sort:{
                     _score:{
                         order:"desc"
                     }
                 },
-                /* highlight 추후 적용 */
-                /*
                 highlight: {
-                    pre_tags:["<strong>"],
-                    post_tags:["</strong>"],
+                    // pre_tags:["<strong>"],
+                    // post_tags:["</strong>"],
                     fields: {
                         content:{}
                     }
                 },
-                */
                 from:0,
                 size:50,
                 explain:true
@@ -88,17 +85,19 @@ exports.search = {
             const content = new Array();
 
             for(i in resultHits){
-                content.push(resultHits[i].fields);
+                content.push(resultHits[i]);
+                console.log(content);
+
             }
 
-            console.log(content);
 
-            return reply.view('heewoo', {
-                title: 'search | Hapi ' + request.server.version,
-                message: '검색어 =' + keyword,
+
+            return reply.view('search', {
+                title   :  'search | Hapi ' + request.server.version,
+                keyword :  keyword,
                 contents:  content,
-                total: resp.hits.total,
-                took:  resp.took/1000
+                total   :  resp.hits.total,
+                took    :  resp.took/1000
             });
 
         }, function (err) {
