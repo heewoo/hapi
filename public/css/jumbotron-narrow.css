@@ -47,8 +47,8 @@ body {
     border-bottom: 1px solid #e5e5e5;
 }
 .jumbotron .btn {
-    padding: 14px 24px;
-    font-size: 21px;
+    /*padding: 14px 24px;*/
+    /*font-size: 21px;*/
 }
 
 /* Supporting marketing content */
@@ -76,4 +76,14 @@ body {
     .jumbotron {
         border-bottom: 0;
     }
+}
+
+.jumbotron .search-panel{
+    width :100%;
+}
+
+
+
+.jumbotron .search-panel-button{
+    width :20%;
 }

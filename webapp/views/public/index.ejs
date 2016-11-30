@@ -1,0 +1,66 @@
+<script>
+    $.ajax({
+        type: "GET",
+        url:'./totalCnt',
+        success:function(data){
+            $("#count").text(data.count);
+        }
+    })
+
+
+    function getSite(){
+        location.href="./search?q="+$("input[name=q]").val();
+    }
+
+</script>
+
+<div id="content">
+    <div class="container">
+        <h1>Hello G.T</h1>
+        <h1>전체 문서   <string id="count"></string>건</h1>
+    </div>
+</div>
+
+
+
+<div class="jumbotron">
+
+
+
+
+    <form class="form-inline" method="GET" action="/search">
+        <div class="input-group input-group-lg search-panel">
+
+                <input class="form-control input-lg " name="q" type="text" placeholder="검색어를 입력하세요"  style="width:70%">
+                <a href="javascript:getSite();" class="btn btn-lg btn-info search-panel-button">
+                    <span class="glyphicon glyphicon-search">Search</span>
+                </a>
+
+        </div>
+</form>
+
+
+</div>
+<div class="row marketing">
+    <div class="col-lg-6">
+        <h4>Subheading</h4>
+        <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+
+        <h4>Subheading</h4>
+        <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+
+        <h4>Subheading</h4>
+        <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+    </div>
+
+    <div class="col-lg-6">
+        <h4>Subheading</h4>
+        <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+
+        <h4>Subheading</h4>
+        <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+
+        <h4>Subheading</h4>
+        <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+    </div>
+</div>
