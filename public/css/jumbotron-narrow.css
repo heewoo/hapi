@@ -82,8 +82,16 @@ body {
     width :100%;
 }
 
-
-
 .jumbotron .search-panel-button{
     width :20%;
+}
+
+
+.jumbotron .search-info{
+    float:left;
+}
+
+
+.jumbotron .content-panel{
+    padding-bottom:20px;
 }

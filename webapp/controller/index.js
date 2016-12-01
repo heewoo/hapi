@@ -52,7 +52,6 @@ exports.search = {
         // view heewoo - >search //
         // elasticsearch-odm - npm 추후 적용 ( https://www.npmjs.com/package/elasticsearch-odm ) //
 
-
         client.search({
             index: 'nutch',
             body: {
@@ -87,12 +86,10 @@ exports.search = {
             const content = new Array();
 
             for(i in resultHits){
-                content.push(resultHits[i]);
-                console.log(content);
+
+                    content.push(resultHits[i]);
 
             }
-
-
 
             return reply.view('search', {
                 title   :  'search | Hapi ' + request.server.version,
@@ -105,9 +102,6 @@ exports.search = {
         }, function (err) {
             console.trace(err.message);
         });
-
-
-
 
     }
 };
