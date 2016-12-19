@@ -54,17 +54,19 @@ exports.search = {
 
         client.search({
             index: 'nutch',
+            type: 'doc',
             body: {
                 query:{
                     multi_match: {
                             query: keyword,
                             fields: ["content"],
-                            tie_breaker: 0.1,
+                            tie_breaker: 0.5,
                             type: "best_fields",
                             fuzziness: "AUTO"
                         }
+                            // match:{_id:"com.tmz.www:http/photos/2016/09/25/kim-and-kanye-west-house-construction/"}
                 },
-                fields:["host","id","title","url"],
+                fields:["host","id","title","url","content"],
                 sort:{
                     _score:{
                         order:"desc"
@@ -86,9 +88,12 @@ exports.search = {
             const content = new Array();
 
             for(i in resultHits){
+                var t = resultHits[i].fields.url.toString().search("/feed");
+                if(t){
+                    resultHits[i].fields.url = resultHits[i].fields.url.toString().replace('/feed','');
 
+                }
                     content.push(resultHits[i]);
-
             }
 
             return reply.view('search', {
