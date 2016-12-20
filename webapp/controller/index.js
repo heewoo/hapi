@@ -17,7 +17,7 @@ exports.index = {
           reply.view('index', {
             title: 'views/index.js | Hapi ' + request.server.version,
             message: 'Index - Hello World!',
-            dirname: 'http://localhost:3000'
+            dirname: 'index'
 
         });
     }

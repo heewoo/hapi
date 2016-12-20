@@ -95,3 +95,13 @@ body {
 .jumbotron .content-panel{
     padding-bottom:20px;
 }
+
+/* Responsive: Portrait tablets and up */
+@media screen and (max-width: 740px) {
+    .jumbotron .glyphicon .search-text {
+        font-size: 0px
+    }
+    .header {
+        font-size: 11px;
+    }
+}
