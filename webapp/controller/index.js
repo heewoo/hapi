@@ -59,7 +59,7 @@ exports.search = {
                 query:{
                     multi_match: {
                             query: keyword,
-                            fields: ["content"],
+                            fields: ["title"],
                             tie_breaker: 0.5,
                             type: "best_fields",
                             fuzziness: "AUTO"

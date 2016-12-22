@@ -29,12 +29,12 @@
       <img src=" http://www.google.com/s2/favicons?domain=<%= contents[i].fields.host %>"> <%= contents[i].fields.host %>
     </h5>
       <a href="#" onclick="getSiteMove('<%= contents[i].fields.url %>')">
-        <h3><%= contents[i].fields.title %></h3>
+        <h3><%= contents[i].fields.title %></h3>g
       </a>
 
     <p>
       <span content="searchContent<%=i%>">
-        <%= contents[i].highlight.content.toString().substring(0, 200)%>
+        <%= contents[i].fields.content.toString().substring(0, 200)%>
       </span>
     </p>
   </div>
