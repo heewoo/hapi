@@ -24,6 +24,7 @@ exports.index = {
 };
 
 
+
 exports.totalCnt = {
     auth: {
         mode: 'try',
@@ -35,9 +36,6 @@ exports.totalCnt = {
         });
     }
 };
-
-
-
 
 
 exports.search = {
@@ -59,7 +57,7 @@ exports.search = {
                 query:{
                     multi_match: {
                             query: keyword,
-                            fields: ["title"],
+                            fields: ["title","content"],
                             tie_breaker: 0.5,
                             type: "best_fields",
                             fuzziness: "AUTO"

@@ -1,17 +1,3 @@
-<script>
-    $.ajax({
-        type: "GET",
-        url:'./totalCnt',
-        success:function(data){
-            $("#count").text(data.count);
-        }
-    })
-    function getSearch(){
-        location.href="./search?q="+$("input[name=q]").val();
-    }
-</script>
-
-
 <div class="jumbotron">
     <form class="form-inline" method="GET" action="/search">
         <div class="input-group input-group-lg search-panel">
@@ -30,11 +16,11 @@
     <div class="col-lg-6">
 
         <h4>개발 블로그 전문 검색</h4>
-        <p>개발자를 위한 사이트</p>
+        <p>개발자를 위한 검색 사이트</p>
 
 
-        <h4>전체 문서   <string id="count"></string>건</h4>
-        <p>지금 이시간에도 문서 색인이 진행중입니다.</p>
+        <h4>개발관련 검색 최적화</h4>
+        <p>당신의 코딩을 지원합니다</p>
 
     </div>
 
@@ -43,7 +29,6 @@
         <p>개발 관련 최신뉴스, 신기술, 트랜드 검색</p>
 
         <h4>블로그 추천엔진 탑재 예정</h4>
-        <p>기술리뷰 블로그 추천을 하는 추천검색.</p>
-
+        <p>기술리뷰 블로그 추천검색</p>
     </div>
 </div>
