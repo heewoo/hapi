@@ -27,28 +27,32 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
   <script src="http://code.jquery.com/jquery.js"></script>
+  <!-- common script -->
+  <script src="../public/js/common.js"></script>
 </head>
 <body>
-
 <div class="container">
   <div class="header">
     <nav>
       <ul class="nav nav-pills pull-right">
-        <li role="presentation" class="active"><a href="/">Home</a></li>
-        <li role="presentation"><a href="/about">About</a></li>
-        <li role="presentation"><a href="#">Contact</a></li>
+        <li id="index" role="presentation"><a href="/">Home</a></li>
+        <li id="about" role="presentation"><a href="/about">About</a></li>
+        <li id="contact" role="presentation"><a href="#">Contact</a></li>
       </ul>
     </nav>
     <h3 class="text-muted"><a href="../">개서치</a></h3>
   </div>
   <!-- content -->
   <%- content %>
-
   <footer class="footer">
     <p>&copy; heewoo 2016</p>
   </footer>
 </div> <!-- /container -->
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="../public/js/ie10-viewport-bug-workaround.js"></script>
+<script>
+  menuActive("<%=dirname%>");
+</script>
+
 </body>
 </html>

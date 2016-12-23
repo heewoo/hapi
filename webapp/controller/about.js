@@ -10,6 +10,7 @@ exports.index = {
         reply.view('about', {
             title: 'views/index.js | Hapi ' + request.server.version,
             message: 'Index - Hello World!',
+            dirname: 'about',
             img_path: '../../public/img/'
 
         });
