@@ -99,7 +99,8 @@ exports.search = {
                 keyword :  keyword,
                 contents:  content,
                 total   :  resp.hits.total,
-                took    :  resp.took/1000
+                took    :  resp.took/1000,
+                dirname: 'index'
             });
 
         }, function (err) {
