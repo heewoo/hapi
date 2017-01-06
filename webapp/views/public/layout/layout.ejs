@@ -50,8 +50,15 @@
 </div> <!-- /container -->
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="../public/js/ie10-viewport-bug-workaround.js"></script>
-<script>
+
+
+<script language="JavaScript">
   menuActive("<%=dirname%>");
+
+  function getSearch() {
+    location.href = "./search?q=" + $("input[name=q]").val();
+  }
+
 </script>
 
 </body>

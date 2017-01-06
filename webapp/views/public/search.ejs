@@ -29,7 +29,7 @@
       <img src=" http://www.google.com/s2/favicons?domain=<%= contents[i].fields.host %>"> <%= contents[i].fields.host %>
     </h5>
       <a href="#" onclick="getSiteMove('<%= contents[i].fields.url %>')">
-        <h3><%= contents[i].fields.title %></h3>g
+        <h3><%= contents[i].fields.title %></h3>
       </a>
 
     <p>
@@ -50,18 +50,8 @@
 
 <script language="JavaScript">
 
-  function getContentDetail(url) {
-    // target //
-    $("#contentDetail").attr("src", url);
-  }
-
   function getSiteMove(url) {
     window.open(url);
   }
-
-  function getSearch() {
-    location.href = "./search?q=" + $("input[name=q]").val();
-  }
-
 
 </script>
