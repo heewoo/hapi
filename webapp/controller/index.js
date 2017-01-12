@@ -1,7 +1,7 @@
 
 var Elasticsearch = require('elasticsearch');
 var client = new Elasticsearch.Client({
-    host: 'search:9200',
+    host: 's1:9200',
     log: 'info'
 });
 
@@ -15,10 +15,10 @@ exports.index = {
             return reply.redirect('/index');
         }
           reply.view('index', {
-            title: 'views/index.js | Hapi ' + request.server.version,
+            title: '개서치',
             message: 'Index - Hello World!',
-            dirname: 'index'
-
+            dirname: 'index',
+            description: '개발 검색사이트'
         });
     }
 };
@@ -49,7 +49,6 @@ exports.search = {
         const result = "";
         // view heewoo - >search //
         // elasticsearch-odm - npm 추후 적용 ( https://www.npmjs.com/package/elasticsearch-odm ) //
-
         client.search({
             index: 'nutch',
             type: 'doc',
@@ -62,7 +61,6 @@ exports.search = {
                             type: "best_fields",
                             fuzziness: "AUTO"
                         }
-                            // match:{_id:"com.tmz.www:http/photos/2016/09/25/kim-and-kanye-west-house-construction/"}
                 },
                 fields:["host","id","title","url","content"],
                 sort:{
@@ -93,19 +91,85 @@ exports.search = {
                 }
                     content.push(resultHits[i]);
             }
-
             return reply.view('search', {
                 title   :  'search | Hapi ' + request.server.version,
                 keyword :  keyword,
                 contents:  content,
                 total   :  resp.hits.total,
                 took    :  resp.took/1000,
-                dirname: 'index'
+                dirname: 'index',
+                description: '개발 검색사이트'
             });
-
         }, function (err) {
             console.trace(err.message);
         });
 
     }
 };
+
+
+
+exports.page = {
+    auth: {
+        mode: 'try',
+        strategy: 'session'
+    },
+    handler: function (request, reply) {
+        const params = request.query;
+        const keyword = params.q;
+        client.search({
+            index: 'nutch',
+            type: 'doc',
+            body: {
+                query:{
+                    match_phrase:{_id:"com.tmz.www:http/photos/2016/09/25/kim-and-kanye-west-house-construction/"}
+                },
+                fields:["host","id","title","url","content","anchor"],
+                sort:{
+                    _score:{
+                        order:"desc"
+                    }
+                },
+                highlight: {
+                    // pre_tags:["<strong>"],
+                    // post_tags:["</strong>"],
+                    fields: {
+                        content:{}
+                    }
+                },
+                from:0,
+                size:50,
+                explain:true
+            }
+        }).then(function (resp) {
+            const resultHits =  resp.hits.hits;
+            const content = new Array();
+            var title = "";
+            var anchor = "";
+
+
+                var t = resultHits[0].fields.url.toString().search("/feed");
+                if(t){
+                    resultHits[0].fields.url = resultHits[0].fields.url.toString().replace('/feed','');
+                }
+
+                content.push(resultHits[0]);
+                title =  resultHits[0].fields.title;
+
+            return reply.view('search', {
+                title   :  title + '| search',
+                keyword :  keyword,
+                anchor  :   anchor,
+                contents:  content,
+                total   :  resp.hits.total,
+                took    :  resp.took/1000,
+                dirname: 'index',
+                description: resultHits[0].fields.content.toString().substring(0, 200)
+            });
+        }, function (err) {
+            console.trace(err.message);
+        });
+
+    }
+};
+
