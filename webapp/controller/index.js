@@ -122,24 +122,10 @@ exports.page = {
             type: 'doc',
             body: {
                 query:{
-                    match_phrase:{_id:"com.tmz.www:http/photos/2016/09/25/kim-and-kanye-west-house-construction/"}
+                    match_phrase:{_id:keyword}
                 },
-                fields:["host","id","title","url","content","anchor"],
-                sort:{
-                    _score:{
-                        order:"desc"
-                    }
-                },
-                highlight: {
-                    // pre_tags:["<strong>"],
-                    // post_tags:["</strong>"],
-                    fields: {
-                        content:{}
-                    }
-                },
-                from:0,
-                size:50,
-                explain:true
+                fields:["host","id","title","url","content","anchor"]
+
             }
         }).then(function (resp) {
             const resultHits =  resp.hits.hits;
@@ -147,25 +133,40 @@ exports.page = {
             var title = "";
             var anchor = "";
 
-
+            console.log(resp.hits.total);
+            if(resp.hits.total>0) {
                 var t = resultHits[0].fields.url.toString().search("/feed");
-                if(t){
-                    resultHits[0].fields.url = resultHits[0].fields.url.toString().replace('/feed','');
+                if (t) {
+                    resultHits[0].fields.url = resultHits[0].fields.url.toString().replace('/feed', '');
                 }
 
                 content.push(resultHits[0]);
-                title =  resultHits[0].fields.title;
+                title = resultHits[0].fields.title;
 
-            return reply.view('search', {
-                title   :  title + '| search',
-                keyword :  keyword,
-                anchor  :   anchor,
-                contents:  content,
-                total   :  resp.hits.total,
-                took    :  resp.took/1000,
-                dirname: 'index',
-                description: resultHits[0].fields.content.toString().substring(0, 200)
-            });
+                return reply.view('search', {
+                    title: title + '| search',
+                    keyword: keyword,
+                    anchor: anchor,
+                    contents: content,
+                    total: resp.hits.total,
+                    took: resp.took / 1000,
+                    dirname: 'index',
+                    description: resultHits[0].fields.content.toString().substring(0, 200)
+                });
+            }else{
+
+                var err_msg = "Not find data !";
+                return reply.view('search', {
+                    title: err_msg+'| search',
+                    keyword: err_msg,
+                    anchor: err_msg,
+                    contents: err_msg,
+                    total: resp.hits.total,
+                    took: resp.took / 1000,
+                    dirname: 'index',
+                    description: err_msg
+                });
+            }
         }, function (err) {
             console.trace(err.message);
         });
